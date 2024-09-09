@@ -3,6 +3,41 @@ const button = document.getElementById('searchbutton');
 const currentWeatherContainer = document.getElementById('current');
 const weatherContainer = document.getElementById('extended');
 const buttoncurr = document.getElementById('currentbutton');
+const history = document.getElementById('history');
+
+// Function to load and display search history
+function loadHistory() {
+    history.innerHTML = ''; // Clear existing history
+    if (localStorage.length === 0) {
+        history.innerHTML = '<p class="text-white">No search history available.</p>';
+    } else {
+        for (let i = 0; i < localStorage.length; i++) {
+            const key = localStorage.key(i);
+            const value = localStorage.getItem(key);
+            const historyItem = document.createElement('li');
+            historyItem.textContent = value;
+            historyItem.classList.add('history-item');
+            historyItem.addEventListener('click', () => {
+                inputbox.value = value;
+                button.click();
+            });
+            history.appendChild(historyItem);
+        }
+    }
+}
+
+// Function to remove the oldest entry from localStorage
+function removeOldestHistory() {
+    if (localStorage.length >= 5) {
+        // Get the oldest key
+        const oldestKey = localStorage.key(0);
+        // Remove the oldest key-value pair
+        localStorage.removeItem(oldestKey);
+    }
+}
+
+// Initial load of history
+loadHistory();
 
 button.addEventListener('click', async function() {
     const inputValue = inputbox.value.trim();
@@ -11,6 +46,13 @@ button.addEventListener('click', async function() {
         displayError("Please enter a location.");
         return;
     }
+
+    // Remove the oldest entry if there are already 5 items
+    removeOldestHistory();
+
+    // Save location to localStorage
+    localStorage.setItem(`location${localStorage.length + 1}`, inputValue);
+    loadHistory();
 
     try {
         // Fetch the location data
@@ -101,7 +143,7 @@ buttoncurr.addEventListener('click', async function() {
                 const responseLocation = await fetch(`https://api.weatherapi.com/v1/search.json?key=a9ff57f2e6394ba296282142240609&q=${latitude},${longitude}`);
                 const locationResult = await responseLocation.json();
 
-                if (locationResult) {
+                if (locationResult && locationResult.length > 0) {
                     const locationName = locationResult[0].name;
                     // Fetch the weather forecast data for the current location
                     const responseforecast = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a9ff57f2e6394ba296282142240609&q=${locationName}&days=5&aqi=yes&alerts=yes`);
