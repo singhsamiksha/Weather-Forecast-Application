@@ -712,26 +712,49 @@ video {
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
 
-.weather-day {
-  border: 2px solid #ddd; /* Border for the box */
+.weather-container {
+  display: flex;
+  flex-wrap: wrap; /* Allows the boxes to wrap onto the next line if necessary */
+  justify-content: center; /* Center-aligns the boxes horizontally */
+  gap: 10px; /* Adds space between the boxes */
+}
+
+.weather-day, .curr-weather-day {
+  width: 500px;
   border-radius: 10px; /* Rounded corners for the box */
   padding: 20px; /* Padding inside the box */
-  margin: 10px 10px; /* Spacing between forecast boxes */
+  margin: 10px; /* Spacing around the box */
   text-align: center; /* Center-align text inside the box */
-  box-shadow: 0 4px 8px white; /* Shadow for a subtle 3D effect */
-  background-color:  rgb(9 9 11); /* Background color of the box */
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.966); /* Shadow for a subtle 3D effect */
+  background-color: rgb(9, 9, 11); /* Background color of the box */
+  height: 250px; /* Fixed height for equal sizing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.curr-weather-day{
+  width: 100%;
+}
+
+#dateHeading,#todayHeading{
+  font-size: 20px;
+  font-weight: 600;
+  color: rgb(0, 162, 255);
+}
+
+#todayHeading{
+  font-size: 30px;
+  font-weight: 600;
 }
 
 .weather-day img {
   max-width: 100px; /* Limit the size of the weather icon */
   margin: 0 auto; /* Center the image */
+  padding: 0px 10px;
 }
 
-.weather-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 #location{
   font-size: 2rem;

@@ -51,8 +51,8 @@ function displayWeather(data, locationName) {
     // Display current weather
     const current = data.current;
     const currentWeatherInfo = `
-        <div class="weather-day">
-            <h3>Today</h3>
+        <div class="curr-weather-day">
+            <h3 id="todayHeading">Today</h3>
             <img src="https:${current.condition.icon}" alt="${current.condition.text}">
             <p>Temperature: ${current.temp_c}°C</p>
             <p>Humidity: ${current.humidity}%</p>
@@ -70,7 +70,7 @@ function displayWeather(data, locationName) {
         if (day.date !== data.forecast.forecastday[0].date) { // Skip the current day's forecast as it's already displayed
             const weatherInfo = `
                 <div class="weather-day">
-                    <h3>${day.date}</h3>
+                    <h3 id="dateHeading">${day.date}</h3>
                     <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
                     <p>Temperature: ${day.day.avgtemp_c}°C </p>
                     <p>Humidity: ${day.day.avghumidity}%</p>
