@@ -719,14 +719,13 @@ video {
   gap: 10px; /* Adds space between the boxes */
 }
 
-.weather-day, .curr-weather-day {
+.weather-day {
   width: 500px;
   border-radius: 10px; /* Rounded corners for the box */
   padding: 20px; /* Padding inside the box */
   margin: 10px; /* Spacing around the box */
   text-align: center; /* Center-align text inside the box */
-  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.966); /* Shadow for a subtle 3D effect */
-  background-color: rgb(9, 9, 11); /* Background color of the box */
+  background-color: rgb(63 63 70); /* Background color of the box */
   height: 250px; /* Fixed height for equal sizing */
   display: flex;
   flex-direction: column;
@@ -735,7 +734,18 @@ video {
 }
 
 .curr-weather-day{
+  border-radius: 10px; /* Rounded corners for the box */
+  padding: 20px; /* Padding inside the box */
+
+  height: 250px; /* Fixed height for equal sizing */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 100%;
+  background-color: rgb(63 63 70);;
+  color: white;
 }
 
 #dateHeading,#todayHeading{
@@ -769,4 +779,14 @@ video {
   text-align: center;
   color: orange;
   margin-top: 20px;
+}
+
+.error{
+  color: rgb(211, 3, 3);
+  font-size: 1.5rem;
+}
+
+#searchbutton, #currentbutton{
+  padding: 8px 20px;
+  margin: 0px 10px;
 }
