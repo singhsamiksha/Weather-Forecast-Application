@@ -5,15 +5,39 @@ const weatherContainer = document.getElementById('extended');
 const buttoncurr = document.getElementById('currentbutton');
 const history = document.getElementById('history');
 
+
+function getSearchHistory() {
+    const data = localStorage.getItem('locationSearchHistory') || '[]';
+    return JSON.parse(data);
+}
+
+function setSearchHistory(searchValue) {
+    const MAX_SEARCH_HISTORY_ITEM_LENGTH = 5;
+    let currentSearchHistory = getSearchHistory();
+
+    // checking if item already exists or not
+    const isItemAlreadyExists = currentSearchHistory.find(searchItem => {
+        return searchItem.toLowerCase() === searchValue.toLowerCase();
+    })
+
+    if(isItemAlreadyExists) return; 
+
+    currentSearchHistory.unshift(searchValue);
+    if(currentSearchHistory.length > MAX_SEARCH_HISTORY_ITEM_LENGTH) {
+        currentSearchHistory.pop();
+    }
+    localStorage.setItem('locationSearchHistory', JSON.stringify(currentSearchHistory));
+}
+
 // Function to load and display search history
 function loadHistory() {
     history.innerHTML = ''; // Clear existing history
-    if (localStorage.length === 0) {
+    const searchHistory = getSearchHistory();
+    if (searchHistory.length === 0) {
         history.innerHTML = '<p class="text-white">No search history available.</p>';
     } else {
-        for (let i = 0; i < localStorage.length; i++) {
-            const key = localStorage.key(i);
-            const value = localStorage.getItem(key);
+        for (let i = 0; i < searchHistory.length; i++) {
+            const value =searchHistory[i];
             const historyItem = document.createElement('li');
             historyItem.textContent = value;
             historyItem.classList.add('history-item');
@@ -50,10 +74,6 @@ button.addEventListener('click', async function() {
     // Remove the oldest entry if there are already 5 items
     removeOldestHistory();
 
-    // Save location to localStorage
-    localStorage.setItem(`location${localStorage.length + 1}`, inputValue);
-    loadHistory();
-
     try {
         // Fetch the location data
         const response = await fetch(`https://api.weatherapi.com/v1/search.json?key=a9ff57f2e6394ba296282142240609&q=${inputValue}`);
@@ -66,7 +86,10 @@ button.addEventListener('click', async function() {
                 // Fetch the weather forecast data
                 const responseforecast = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a9ff57f2e6394ba296282142240609&q=${locationName}&days=5&aqi=yes&alerts=yes`);
                 const resultforecast = await responseforecast.json();
-                console.log(resultforecast);
+
+                // Save location to localStorage
+                setSearchHistory(inputValue);
+                loadHistory();
                 
                 // Display data
                 displayWeather(resultforecast, locationName);
