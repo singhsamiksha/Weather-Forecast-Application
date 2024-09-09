@@ -711,3 +711,39 @@ video {
   --tw-text-opacity: 1;
   color: rgb(0 0 0 / var(--tw-text-opacity));
 }
+
+.weather-day {
+  border: 2px solid #ddd; /* Border for the box */
+  border-radius: 10px; /* Rounded corners for the box */
+  padding: 20px; /* Padding inside the box */
+  margin: 10px 10px; /* Spacing between forecast boxes */
+  text-align: center; /* Center-align text inside the box */
+  box-shadow: 0 4px 8px white; /* Shadow for a subtle 3D effect */
+  background-color:  rgb(9 9 11); /* Background color of the box */
+}
+
+.weather-day img {
+  max-width: 100px; /* Limit the size of the weather icon */
+  margin: 0 auto; /* Center the image */
+}
+
+.weather-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#location{
+  font-size: 2rem;
+  font-weight: 600;
+  text-align: center;
+  color: orange;
+}
+
+#heading{
+  font-size: 1.5rem;
+  font-weight: 600;
+  text-align: center;
+  color: orange;
+  margin-top: 20px;
+}
