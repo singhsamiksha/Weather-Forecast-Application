@@ -4,6 +4,8 @@ const currentWeatherContainer = document.getElementById('current');
 const weatherContainer = document.getElementById('extended');
 const buttoncurr = document.getElementById('currentbutton');
 const history = document.getElementById('history');
+const clearHistoy = document.getElementById('clearhistory');
+const searchResult = document.getElementById('searchresult');
 
 
 function getSearchHistory() {
@@ -34,13 +36,14 @@ function loadHistory() {
     history.innerHTML = ''; // Clear existing history
     const searchHistory = getSearchHistory();
     if (searchHistory.length === 0) {
-        history.innerHTML = '<p class="text-white">No search history available.</p>';
+        document.getElementById('history-section').classList.add('hidden');
     } else {
+        document.getElementById('history-section').classList.remove('hidden');
         for (let i = 0; i < searchHistory.length; i++) {
             const value =searchHistory[i];
             const historyItem = document.createElement('li');
             historyItem.textContent = value;
-            historyItem.classList.add('history-item');
+            historyItem.classList.add('py-2', 'px-3', 'hover:bg-gray-600', 'cursor-pointer');
             historyItem.addEventListener('click', () => {
                 inputbox.value = value;
                 button.click();
@@ -63,7 +66,7 @@ function removeOldestHistory() {
 // Initial load of history
 loadHistory();
 
-button.addEventListener('click', async function() {
+button.addEventListener('click', async function(event) {
     const inputValue = inputbox.value.trim();
 
     if (inputValue === "") {
@@ -89,6 +92,7 @@ button.addEventListener('click', async function() {
 
                 // Save location to localStorage
                 setSearchHistory(inputValue);
+                searchResult.classList.remove('hidden');
                 loadHistory();
                 
                 // Display data
@@ -110,13 +114,13 @@ function displayWeather(data, locationName) {
     currentWeatherContainer.innerHTML = ''; // Clear previous current weather data
 
     // Display location name
-    const locationHeader = `<h2 id="location">${locationName.toUpperCase()}</h2>`;
+    const locationHeader = `<h2 id="location" class="mb-4">${locationName.toUpperCase()}</h2>`;
     currentWeatherContainer.innerHTML += locationHeader;
 
     // Display current weather
     const current = data.current;
     const currentWeatherInfo = `
-        <div class="curr-weather-day">
+        <div class="curr-weather-day bg-zinc-900">
             <h3 id="todayHeading">Today</h3>
             <img src="https:${current.condition.icon}" alt="${current.condition.text}">
             <p>Temperature: ${current.temp_c}°C</p>
@@ -134,7 +138,7 @@ function displayWeather(data, locationName) {
     forecast.forEach(day => {
         if (day.date !== data.forecast.forecastday[0].date) { // Skip the current day's forecast as it's already displayed
             const weatherInfo = `
-                <div class="weather-day">
+                <div class="weather-day bg-zinc-900">
                     <h3 id="dateHeading">${day.date}</h3>
                     <img src="https:${day.day.condition.icon}" alt="${day.day.condition.text}">
                     <p>Temperature: ${day.day.avgtemp_c}°C</p>
@@ -188,3 +192,8 @@ buttoncurr.addEventListener('click', async function() {
         displayError("Geolocation is not supported by this browser.");
     }
 });
+
+clearHistoy.addEventListener('click', function() {
+    localStorage.removeItem('locationSearchHistory');
+    loadHistory();
+})

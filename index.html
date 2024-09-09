@@ -4,21 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Weather Forecast Dashboard</title>
-    <link rel="stylesheet" href="./tailwindstyle.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
-<body>
-    <h1 class="text-4xl bg-zinc-950 text-center text-white p-7">Weather Forecast Dashboard</h1>
-    <div class="bg-zinc-950 p-6 text-center flex align-center justify-center">
+<body class="bg-zinc-950">
+    <h1 class="text-4xl text-center text-white p-7">Weather Forecast Dashboard</h1>
+    <div class="bg-zinc-950 p-6 flex align-center justify-center">
         <div>
-        <label id="name" class="text-xl text-white">Enter the city: &nbsp; </label>
-        <input id="searchbox" type="text" placeholder="E.g. New Delhi" class="p-2 w-96" autocomplete="off">
-        <div id="history" class="text-white mt-4 bg-white hidden"></div>
+        <input id="searchbox" type="text" placeholder="Search City, e.g. New Delhi, Jaipur" class="p-2 w-96" autocomplete="off">
+        <div class="bg-zinc-900 mt-2 text-white" id="history-section">
+            <div class="flex p-2 justify-between">
+                <p class="text-zinc-500">Search History </p>
+                <button id="clearhistory" class="hover:underline">Clear All</button>
+            </div>
+            <ul id="history"></ul>
         </div>
-        <button id="searchbutton" class="p-2 bg-sky-600 text-center text-white p-7 w-32">Search</button>
-        <span class="text-white align-center"> OR </span>
-        <button id="currentbutton" class="p-2 bg-sky-600 text-center text-white p-7">Use My Current Location</button>        
     </div>
-    <div class="bg-zinc-700 text-center text-white p-7 justify-between align-center gap-2">
+        <div>
+            <button id="searchbutton" type="submit" class="p-2 bg-sky-600 text-center text-white w-32 ml-3">Search</button>
+            <span class="text-white align-center"> OR </span>
+            <button id="currentbutton" class="p-2 bg-sky-600 text-center text-white">Use My Current Location</button>        
+        </div>
+    </div>
+    <div class="bg-zinc-900 text-center text-white p-7 justify-between align-center gap-2 hidden" id="searchresult">
         <div id="current" class="bg-zinc-950 p-9 w-full h-96"></div>
         <div id="extended" class="bg-zinc-950 p-9 h-96 flex justify-between"></div>
     </div>
