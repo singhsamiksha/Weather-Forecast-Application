@@ -35,9 +35,3 @@
     color: rgb(211, 3, 3);
     font-size: 1.5rem;
 }
-
-#search-button,
-#current-location-button {
-    padding: 8px 20px;
-    margin: 0px 10px;
-}

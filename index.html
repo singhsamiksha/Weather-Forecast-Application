@@ -11,22 +11,21 @@
 
 <body class="bg-zinc-950 text-white">
     <h1 class="text-4xl text-center p-7 w-full">Weather Forecast Dashboard</h1>
-    <div class="bg-zinc-950 flex justify-center flex-col p-5">
-        <div>
+    <div class="bg-zinc-950 flex justify-center flex-col items-center p-5">
+        <div class="flex justify-center flex-col lg:flex-row w-full lg:w-3/4 xl:w-2/4">
             <input id="search-box" type="text" placeholder="Search City, e.g. New Delhi, Jaipur"
-                class="p-2 w-full lg:w-50 mt-4 bg-zinc-900 text-white border border-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-500 focus:border-zinc-500"
+                class="p-2 w-full mt-4 bg-zinc-900 text-white border border-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-500 focus:border-zinc-500"
                 autocomplete="off">
             <div class="flex justify-center items-center mt-4">
                 <button id="search-button" type="submit" class="p-2 bg-sky-600 text-center text-white w-32 ml-3">
                     Search
                 </button>
-                <span class="text-white align-center"> OR </span>
-                <button id="current-location-button" class="p-2 bg-sky-600 text-center text-white">Use My Current
+                <span class="text-white align-center px-4"> OR </span>
+                <button id="current-location-button" class="p-2 bg-sky-600 text-center text-white w-max">Use My Current
                     Location</button>
             </div>
         </div>
-
-        <div class="bg-zinc-900 mt-2 text-white pb-2 mt-3 hidden" id="history-section">
+        <div class="bg-zinc-900 mt-2 text-white pb-2 mt-3 hidden w-full lg:w-3/4 xl:w-2/4" id="history-section">
             <div class="flex justify-between p-3">
                 <p class="text-zinc-500">Search History </p>
                 <button id="clearhistory" class="hover:underline">Clear All</button>
@@ -43,7 +42,7 @@
         <div id="today-forcast" class="bg-zinc-950 w-full p-5"></div>
         <h2 class="upcoming-forcast-heading">4-Day Forecast</h2>
         <div id="upcoming-forcast"
-            class="bg-zinc-950 p-9 h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            class="bg-zinc-950 p-5 h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         </div>
     </div>
 
