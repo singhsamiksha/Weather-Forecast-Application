@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,29 +8,55 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="./style.css">
 </head>
-<body class="bg-zinc-950">
-    <h1 class="text-4xl text-center text-white p-7">Weather Forecast Dashboard</h1>
-    <div class="bg-zinc-950 p-6 flex align-center justify-center">
+
+<body class="bg-zinc-950 text-white">
+    <h1 class="text-4xl text-center p-7 w-full">Weather Forecast Dashboard</h1>
+    <div class="bg-zinc-950 flex justify-center flex-col p-5">
         <div>
-        <input id="searchbox" type="text" placeholder="Search City, e.g. New Delhi, Jaipur" class="p-2 w-96" autocomplete="off">
-        <div class="bg-zinc-900 mt-2 text-white" id="history-section">
-            <div class="flex p-2 justify-between">
+            <input id="search-box" type="text" placeholder="Search City, e.g. New Delhi, Jaipur"
+                class="p-2 w-full lg:w-50 mt-4 bg-zinc-900 text-white border border-zinc-800 placeholder-zinc-400 focus:outline-none focus:ring-1 focus:ring-zinc-500 focus:border-zinc-500"
+                autocomplete="off">
+            <div class="flex justify-center items-center mt-4">
+                <button id="search-button" type="submit" class="p-2 bg-sky-600 text-center text-white w-32 ml-3">
+                    Search
+                </button>
+                <span class="text-white align-center"> OR </span>
+                <button id="current-location-button" class="p-2 bg-sky-600 text-center text-white">Use My Current
+                    Location</button>
+            </div>
+        </div>
+
+        <div class="bg-zinc-900 mt-2 text-white pb-2 mt-3 hidden" id="history-section">
+            <div class="flex justify-between p-3">
                 <p class="text-zinc-500">Search History </p>
                 <button id="clearhistory" class="hover:underline">Clear All</button>
             </div>
-            <ul id="history"></ul>
+            <ul id="search-history-list"></ul>
         </div>
     </div>
-        <div>
-            <button id="searchbutton" type="submit" class="p-2 bg-sky-600 text-center text-white w-32 ml-3">Search</button>
-            <span class="text-white align-center"> OR </span>
-            <button id="currentbutton" class="p-2 bg-sky-600 text-center text-white">Use My Current Location</button>        
+
+    <!-- Containers, One of them will be visible at a time -->
+
+    <!-- Search Result Container -->
+    <div class="text-center text-white justify-between align-center gap-2 hidden" id="search-result-container">
+        <h2 id="locationname"></h2>
+        <div id="today-forcast" class="bg-zinc-950 w-full p-5"></div>
+        <h2 class="upcoming-forcast-heading">4-Day Forecast</h2>
+        <div id="upcoming-forcast"
+            class="bg-zinc-950 p-9 h-auto grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         </div>
     </div>
-    <div class="bg-zinc-900 text-center text-white p-7 justify-between align-center gap-2 hidden" id="searchresult">
-        <div id="current" class="bg-zinc-950 p-9 w-full h-96"></div>
-        <div id="extended" class="bg-zinc-950 p-9 h-96 flex justify-between"></div>
+
+    <!-- Loader Container -->
+    <div class="flex items-center justify-center hidden" id="loader-section">
+        <div class="animate-spin inline-block w-12 h-12 border-4 rounded-full border-sky-600 border-b-transparent border-l-transparent"></div>
     </div>
+
+    <!-- Error Message Container -->
+    <div class="text-center hidden" id="error-section"></div>
+
+    <!-- Containers End -->
     <script src="./script.js"></script>
 </body>
+
 </html>
