@@ -105,46 +105,6 @@ function loadHistory() {
     }
 }
 
-searchButton.addEventListener('click', async function (event) {
-    setContainer(CONTAINERS.LOADER);
-    const inputValue = inputbox.value.trim();
-    
-    if (!inputValue || !inputValue.length) {
-        displayError("Please enter a location.");
-        return;
-    }
-
-    try {
-        // Fetch the location data
-        const response = await fetch(`https://api.weatherapi.com/v1/search.json?key=a9ff57f2e6394ba296282142240609&q=${inputValue}`);
-        const result = await response.json();
-
-        if (result.length > 0) {  // Check if the array has at least one element
-            const locationName = result[0].name; // Access the 'name' property of the first element
-
-            try {
-                // Fetch the weather forecast data
-                const responseforecast = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a9ff57f2e6394ba296282142240609&q=${locationName}&days=5&aqi=yes&alerts=yes`);
-                const resultforecast = await responseforecast.json();
-
-                // Save location to localStorage
-                setSearchHistory(locationName);
-
-                // Display data
-                displayWeather(resultforecast, locationName);
-            } catch (error) {
-                displayError(`Error fetching forecast data: ${error.message}`);
-            }
-        } else {
-            displayError("No results found. Please enter a valid city name.");
-        }
-    } catch (error) {
-        displayError(`Error fetching location data: ${error.message}`);
-    } finally {
-        displayLoader(false);
-    }
-});
-
 // Function to display weather data
 function displayWeather(data, locationName) {
     upcomingDaysForcastContainer.innerHTML = ''; // Clear previous data
@@ -199,8 +159,49 @@ function displayError(message) {
     }
 }
 
+searchButton.addEventListener('click', async function (event) {
+    setContainer(CONTAINERS.LOADER);
+    const inputValue = inputbox.value.trim();
+    
+    if (!inputValue || !inputValue.length) {
+        displayError("Please enter a location.");
+        return;
+    }
+
+    try {
+        // Fetch the location data
+        const response = await fetch(`https://api.weatherapi.com/v1/search.json?key=a9ff57f2e6394ba296282142240609&q=${inputValue}`);
+        const result = await response.json();
+
+        if (result.length > 0) {  // Check if the array has at least one element
+            const locationName = result[0].name; // Access the 'name' property of the first element
+
+            try {
+                // Fetch the weather forecast data
+                const responseforecast = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a9ff57f2e6394ba296282142240609&q=${locationName}&days=5&aqi=yes&alerts=yes`);
+                const resultforecast = await responseforecast.json();
+
+                // Save location to localStorage
+                setSearchHistory(locationName);
+
+                // Display data
+                displayWeather(resultforecast, locationName);
+            } catch (error) {
+                displayError(`Error fetching forecast data: ${error.message}`);
+            }
+        } else {
+            displayError("No results found. Please enter a valid city name.");
+        }
+    } catch (error) {
+        displayError(`Error fetching location data: ${error.message}`);
+    } finally {
+        displayLoader(false);
+    }
+});
+
 // Add functionality to buttoncurr to get the current location
 currentLocationButton.addEventListener('click', async function () {
+    setContainer(CONTAINERS.LOADER);
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(async function (position) {
             const { latitude, longitude } = position.coords;
@@ -215,9 +216,8 @@ currentLocationButton.addEventListener('click', async function () {
                     // Fetch the weather forecast data for the current location
                     const responseforecast = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=a9ff57f2e6394ba296282142240609&q=${locationName}&days=5&aqi=yes&alerts=yes`);
                     const resultforecast = await responseforecast.json();
-                    console.log(resultforecast);
-
                     // Display data
+                    setSearchHistory(locationName);
                     displayWeather(resultforecast, locationName);
                 } else {
                     displayError("Unable to retrieve location name.");
