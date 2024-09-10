@@ -70,6 +70,7 @@ button.addEventListener('click', async function(event) {
     const inputValue = inputbox.value.trim();
 
     if (inputValue === "") {
+        searchResult.classList.remove('hidden');
         displayError("Please enter a location.");
         return;
     }
@@ -92,7 +93,6 @@ button.addEventListener('click', async function(event) {
 
                 // Save location to localStorage
                 setSearchHistory(inputValue);
-                searchResult.classList.remove('hidden');
                 loadHistory();
                 
                 // Display data
@@ -106,6 +106,8 @@ button.addEventListener('click', async function(event) {
     } catch (error) {
         displayError(`Error fetching location data: ${error.message}`);
     }
+    searchResult.classList.remove('hidden');
+
 });
 
 // Function to display weather data
